@@ -1,0 +1,20 @@
+﻿<div>
+    <h2>All drinks are shown here!</h2>
+</div>
+@*Define view data*@
+@{
+    ViewData["Title"] = "List of Drinks";
+}
+<h2>@Model.CurrentCategory</h2>
+
+@* @model List<Drink> *@
+
+<div class="container">
+    <div class="row">
+        @foreach (Drink item in Model.Drinks)
+        {
+            // consider using PartialAsync and await?
+            @Html.Partial("DrinksSummary", item)
+        }
+    </div>
+</div>
