@@ -21,6 +21,10 @@ builder.Services.AddControllersWithViews();
 //builder.Services.AddTransient<ICategoryRepository, MockCategoryRepository>();
 builder.Services.AddTransient<IDrinkRepository, DrinkRepository>();
 builder.Services.AddTransient<ICategoryRepository, CategoryRepository>();
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+builder.Services.AddScoped(sp=>ShoppingCart.GetCart(sp));
+builder.Services.AddMemoryCache();
+builder.Services.AddSession();
 
 
 var app = builder.Build();
@@ -35,6 +39,8 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+
+app.UseSession();
 
 app.UseRouting();
 

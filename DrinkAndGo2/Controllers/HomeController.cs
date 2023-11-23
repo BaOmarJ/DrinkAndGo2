@@ -1,4 +1,6 @@
-﻿using DrinkAndGo2.Models;
+﻿using DrinkAndGo2.Data.Interfaces;
+using DrinkAndGo2.Models;
+using DrinkAndGo2.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -6,27 +8,19 @@ namespace DrinkAndGo2.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        private readonly IDrinkRepository _drinkRepository;
+        public HomeController(IDrinkRepository drinkRepository)
         {
-            _logger = logger;
+            _drinkRepository = drinkRepository;
         }
 
-        public IActionResult Index()
+        public ViewResult Index()
         {
-            return View();
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            var homeViewModel = new HomeViewModel
+            {
+                PreferredDrinks = _drinkRepository.PreferredDrinks
+            };
+            return View(homeViewModel);
         }
     }
 }
