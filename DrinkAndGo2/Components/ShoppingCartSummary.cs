@@ -14,7 +14,8 @@ namespace DrinkAndGo2.Components
 
         public IViewComponentResult Invoke()
         {
-            var items = _shoppingCart.GetShoppingCartItems();
+            //var items = _shoppingCart.GetShoppingCartItems(); // get items from database.
+            var items = new List<ShoppingCartItem>() { new ShoppingCartItem(), new ShoppingCartItem() };
             _shoppingCart.ShoppingCartItems = items;
 
             var shoppingCartViewModel = new ShoppingCartViewModel
